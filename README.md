@@ -8,7 +8,7 @@
 
 
 ## Структура репозитория
-
+```text
 ├── src/ # Основные модули
 │ ├── data.py # Загрузка данных и моделей
 │ ├── probing.py # Probing classifiers
@@ -34,7 +34,7 @@
 ├── requirements.txt # Список зависимостей
 ├── pyproject.toml # Метаданные проекта
 └── README.md
-
+```
 
 ## Установка и зависимости
 
@@ -65,7 +65,7 @@ uv sync
 Ссылка на оригинальный датасет: https://github.com/allenai/ruletaker
 
 После загрузки структура должна быть такой:
-
+```text
 data/raw/rultaker/rule-reasoning-dataset-V2020.2.5.0/problog/
 ├── depth-0/
 │   ├── train.jsonl
@@ -75,6 +75,7 @@ data/raw/rultaker/rule-reasoning-dataset-V2020.2.5.0/problog/
 │   └── ...
 ├── depth-2/
 └── ...
+```
 
 ## Воспроизведение результатов
 
