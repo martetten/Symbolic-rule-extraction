@@ -33,3 +33,6 @@ results/
 .vscode/
 .idea/
 *.swp
+
+# Файлы блокировки uv
+uv.lock
