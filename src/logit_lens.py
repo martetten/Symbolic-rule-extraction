@@ -1,4 +1,3 @@
-# src/logit_lens.py
 import numpy as np
 import torch
 import json

@@ -1,4 +1,3 @@
-# src/llm_upgrade.py
 # Функции для дообучения (LoRA) моделей LLM
 
 import torch
@@ -124,6 +123,7 @@ def create_training_args(
     logging_steps=10,
     save_steps=100,
     use_wandb=False,
+    eval_steps=None,  # добавить в exp3,4,5
     eval_dataset_provided=False
 ):
     """
@@ -156,7 +156,7 @@ def create_training_args(
         remove_unused_columns=False,
         push_to_hub=False,
         eval_strategy="steps" if eval_dataset_provided else "no",
-        eval_steps=50 if eval_dataset_provided else None,
+        eval_steps=eval_steps if eval_steps is not None else (save_steps if eval_dataset_provided else None),
         # load_best_model_at_end=True if eval_dataset_provided else False
     )
 
@@ -194,6 +194,7 @@ def train_lora_model(
         learning_rate=config.get("learning_rate", 2e-4),
         logging_steps=config.get("logging_steps", 10),
         save_steps=config.get("save_steps", 50),
+        eval_steps=config.get("eval_steps"),
         use_wandb=config.get("use_wandb", False),
         eval_dataset_provided=(eval_dataset is not None)
     )
@@ -278,7 +279,7 @@ def wrap_for_transformer_lens(base_model_name, adapter_path, device="cuda"):
         base_model_name,
         torch_dtype=torch.bfloat16,
         device_map=None,
-        low_cpu_mem_usage=False,
+        low_cpu_mem_usage=True,
         attn_implementation="eager"  # Избегаем конфликтов с flash_attn на Windows
     )
 

@@ -1,4 +1,3 @@
-# src/dataset_cot.py
 # Функции для преобразования датасета RuleTaker в формат CoT (Chain of Thought)
 
 import numpy as np

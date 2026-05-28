@@ -1,4 +1,3 @@
-# src/data.py
 import os
 import torch
 import numpy as np
@@ -22,7 +21,8 @@ def load_model_and_tokenizer(model_size="410m", device="cuda", dtype=torch.float
         "410m": "EleutherAI/pythia-410m-deduped",
         "1b": "EleutherAI/pythia-1b-deduped",
         "qwen1.5b_instruct": "Qwen/Qwen2.5-1.5B-Instruct",
-        "qwen1.5b_base": "Qwen/Qwen2.5-1.5B"
+        "qwen1.5b_base": "Qwen/Qwen2.5-1.5B",
+        "gpt2-large": "gpt2-large"
     }
     model_name = name_map[model_size]
     model = HookedTransformer.from_pretrained(
@@ -81,7 +81,7 @@ def prepare_example(example):
 
 def get_answer_token_ids(tokenizer, pos_words=("True", "true"), neg_words=("False", "false")):
     # Возвращает ID токенов для классов True и False
-    # Использует ids[-1], чтобы избежать захвата токенов пробела-префикса (например, 'ĠTrue')
+    # Использует ids[-1], чтобы избежать захвата токенов пробела-префикса (например, 'GTrue')
     def find_token(words):
         for word in words:
             ids = tokenizer.encode(word, add_special_tokens=False)
@@ -131,13 +131,13 @@ def evaluate_model_capability(model, dataset, prompt_template, batch_size=32, de
 
     return correct / total if total > 0 else 0.0
 
-def load_config(config_name: str = "experiment.yaml") -> dict:
-    """Загружает YAML конфиг из папки configs/."""
-    config_path = PROJECT_ROOT / "configs" / config_name
-    if not config_path.exists():
-        raise FileNotFoundError(f"Конфиг не найден: {config_path}")
-    with open(config_path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+# def load_config(config_name: str = "experiment.yaml") -> dict:
+#     """Загружает YAML конфиг из папки configs/."""
+#     config_path = PROJECT_ROOT / "configs" / config_name
+#     if not config_path.exists():
+#         raise FileNotFoundError(f"Конфиг не найден: {config_path}")
+#     with open(config_path, "r", encoding="utf-8") as f:
+#         return yaml.safe_load(f)
 
 def estimate_max_length(texts, tokenizer, percentile=95, sample_size=200):
     """Оценивает длину токенов на подвыборке и возвращает значение перцентиля."""
