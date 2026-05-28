@@ -23,13 +23,8 @@ env/
 data/raw/
 data/processed/
 data/pythia-*/
-results/checkpoints/
-results/checkpoints/*.pt
-results/checkpoints/*.pth
-results/checkpoints/*.bin
+results/
 *.safetensors
-results/logs/
-results/metrics/
 *.pth
 *.pt
 *.joblib
